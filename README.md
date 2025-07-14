@@ -64,3 +64,34 @@ encrypts :password
 ```
 
 Mode in docs: https://guides.rubyonrails.org/active_record_encryption.html
+
+## Turbo Frame
+
+Turbo Frames allow predefined parts of a page to be updated on request.
+
+To use turbo frame you can wrap the content you want to update:
+
+```erb
+<!-- app/views/entries/index.html.erb -->
+<%= turbo_frame_tag('main-dashboard') do %>
+  <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+<% end %>
+```
+
+Then each trigger action link should have as data the id gave it to the turbo frame:
+
+```erb
+<!-- app/views/entries/_entry.html.erb -->
+<%= link_to(entry_path(entry), class: 'nav-link', data: {turbo_frame: 'main-dashboard'}) do %>
+   ...
+<% end %>
+```
+
+Finally, the view that should be render in the frame should be:
+
+```erb
+<!-- app/views/entries/show.html.erb -->
+<%= turbo_frame_tag('main-dashboard') do %>
+  ...
+<% end %>
+```

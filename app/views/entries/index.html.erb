@@ -7,7 +7,10 @@
         </nav>
       </div>
       <div class="entries-card__main">
-        <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+        <%# Envolvemos la sección que queremos modificar dentro de un turbo frame %>
+        <%= turbo_frame_tag('main-dashboard') do %>
+          <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+        <% end %>
       </div>
     </div>
   </div>
