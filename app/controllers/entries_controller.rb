@@ -13,7 +13,7 @@ class EntriesController < ApplicationController
       redirect_to root_path
     else
       flash[:alert] = "Sorry, there was an issue :("
-      render :new, status: unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

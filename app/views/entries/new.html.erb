@@ -4,6 +4,17 @@
     <div class="col">
         <div class="card mt-2">
             <div class="card-body">
+                <% if @entry.errors.any? %>
+                    <div id="error_explanation" class="alert alert-danger" role="alert">
+                        <h4>Please fix the <%= pluralize(@entry.errors.count, 'error') %> bellow and try again</h4>
+
+                        <ul>
+                            <% @entry.errors.each do | e | %>
+                                <li><%= e.full_message %></li>
+                            <% end %>
+                        </ul>
+                    </div>
+                <% end %>
                 <%= form_with(model: @entry) do | f | %>
                     <div class="form-floating mb-3">
                         <%= f.text_field(:name, placeholder: 'Name', class: 'form-control') %>
