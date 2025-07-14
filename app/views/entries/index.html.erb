@@ -1,0 +1,13 @@
+<h1>Entries</h1>
+
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+        <% if @entries.any? %>
+            <%= render(@entries) %>
+        <% else %>
+            <h2>No entries yet, <%= link_to("Add new Entry", new_entry_path) %></h2>
+        <% end %>
+    </div>
+  </div>
+</div>

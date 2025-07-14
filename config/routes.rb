@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   resources :entries
 
-  root "pages#home"
+  root "entries#index"
 end
