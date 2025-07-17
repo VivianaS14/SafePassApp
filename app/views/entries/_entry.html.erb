@@ -1,5 +1,7 @@
-<%= link_to(entry_path(entry), class: 'nav-link', data: {turbo_frame: 'main-dashboard'}) do %>
+<%= link_to(entry_path(entry), class: 'nav-link', data: {turbo_frame: 'main-dashboard'}, id: dom_id(entry)) do %>
    <%= render(layout: 'entries/entry_name', locals: {entry: entry}) do %>
       <%= entry.name %>
     <% end %>
 <% end %>
+
+<%# dom_id takes the model name, adds underscore and appends the ID of each instance %>

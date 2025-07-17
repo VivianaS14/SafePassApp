@@ -1,0 +1,10 @@
+<%= render_flash_stream %>
+<%# Heres is not necessary to specify the turbo tag because we using dom_id and he'll knows exactly where to delete %>
+<%= turbo_stream.remove(@entry) %>
+<%= turbo_stream.update('main-dashboard') do %>
+    <% if current_user.entries.any? %>
+        <%= render(partial: 'entries/main', locals: {entry: current_user.entries.first})%>
+    <% else %>
+        <%= render(html: content_tag(:h2, 'No Entries', class: "h-100 d-flex align-items-center justify-content-center"))%>
+    <% end %>
+<% end %>

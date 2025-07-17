@@ -8,13 +8,19 @@
     <div class="entries-card">
       <div class="entries-card__sidebar">
         <nav id="entries-list" class="nav flex-column">
-          <%= render(@entries) %>
+          <% if @entries.any? %>
+            <%= render(@entries) %>
+          <% end %>
         </nav>
       </div>
       <div class="entries-card__main">
         <%# Envolvemos la sección que queremos modificar dentro de un turbo frame %>
         <%= turbo_frame_tag('main-dashboard') do %>
-          <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+          <% if @entries.any? %>
+            <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+          <% else %>
+            <h1 class="h-100 d-flex align-items-center justify-content-center">No Entries</h1>
+          <% end %>
         <% end %>
       </div>
     </div>
