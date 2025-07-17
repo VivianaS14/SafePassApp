@@ -1,0 +1,6 @@
+<%= render_flash_stream %>
+<%# Rails will know what entry update based of Dom Id each entry item has %>
+<%= turbo_stream.replace(@entry) %>
+<%= turbo_stream.update('main-dashboard') do %>
+    <%= render(partial: 'entries/main', locals: {entry: @entry})%>
+<% end %>

@@ -1,10 +1,10 @@
 class EntriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_entry, only: %i[show edit destroy]
+  before_action :set_entry, only: %i[show edit update destroy]
 
   def index
-    @entries = current_user.entries
-    @main_entry = current_user.entries.first
+    @entries = current_user.entries.order(:name)
+    @main_entry = current_user.entries.order(:name).first
   end
 
   def show
@@ -32,6 +32,18 @@ class EntriesController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    if @entry.update(entry_params)
+      flash.now[:notice] = "#{@entry.name} has been updated."
+      respond_to do |format|
+        format.html { redirect_to @entry }
+        format.turbo_stream { }
+      end
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
