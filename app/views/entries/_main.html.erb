@@ -37,7 +37,7 @@
                 <button
                   class="btn btn-outline-primary border-0"
                   data-controller="clipboard"
-                  data-action="click->clipboard#copy"
+                  data-action="click->clipboard#copy click->clipboard#toast"
                   data-clipboard-content-param="<%= entry.username %>"
                 >
                   <i class="bi bi-clipboard-plus"></i>
@@ -66,7 +66,7 @@
               <button
                 class="btn btn-outline-primary border-0"
                 data-controller="clipboard"
-                data-action="click->clipboard#copy"
+                data-action="click->clipboard#copy click->clipboard#toast"
                 data-clipboard-content-param="<%= entry.password %>"
               >
                 <i class="bi bi-clipboard-plus"></i>
