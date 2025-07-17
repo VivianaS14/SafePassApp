@@ -1,4 +1,7 @@
 class Api::V1::AuthController < Api::V1::ApiBaseController
+  # We don't need to valide token in the one that create it
+  skip_before_action :authenticate_token
+
   def create
     user = User.find_by(email: params[:email])
     if user&.valid_password?(params[:password])
