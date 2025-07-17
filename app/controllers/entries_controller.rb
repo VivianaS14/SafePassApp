@@ -18,10 +18,15 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.new(entry_params)
 
     if @entry.save
-      flash[:notice] = "Entry has saved!"
-      redirect_to root_path
+      # We want to see the flash in the current action, we put .now
+      # otherwise it'll be render in redirect path, and using turbo stream that path never render
+      flash.now[:notice] = "<strong>#{@entry.name}<strong> has saved!".html_safe
+      # Tu use turbo stream we use a respond block
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { }
+      end
     else
-      flash[:alert] = "Sorry, there was an issue :("
       render :new, status: :unprocessable_entity
     end
   end

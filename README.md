@@ -1,28 +1,3 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-- Ruby version
-
-- System dependencies
-
-- Configuration
-
-- Database creation
-
-- Database initialization
-
-- How to run the test suite
-
-- Services (job queues, cache servers, search engines, etc.)
-
-- Deployment instructions
-
-- ...
-
 ## Active Record Encryption
 
 First you need to run this command
@@ -94,4 +69,45 @@ Finally, the view that should be render in the frame should be:
 <%= turbo_frame_tag('main-dashboard') do %>
   ...
 <% end %>
+```
+
+## Turbo Stream
+
+Turbo Streams deliver page changes as fragments of HTML wrapped in <turbo-stream> elements. Each stream element specifies an action together with a target ID to declare what should happen to the HTML inside it.
+
+They can be used to surgically update the DOM after a user action such as removing an element from a list without reloading the whole page, or to implement real-time capabilities such as appending a new message to a live conversation as it is sent by a remote user.
+
+```erb
+app/views/entries/index.html.erb
+
+<%# We put as data the id for the part we wanna change with turbo stream, in this case "main-dashboard" %>
+    <%= link_to('+ New Entry', new_entry_path, class: 'btn btn-primary', data: {turbo_frame: "main-dashboard"})%>
+
+<div class="entries-card__main">
+  <%# Envolvemos la sección que queremos modificar dentro de un turbo frame %>
+  <%= turbo_frame_tag('main-dashboard') do %>
+    <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+  <% end %>
+</div>
+```
+
+In the controller, we need to send the respond as turbo stream, in this case we use files as responses
+
+```erb
+if @entry.save
+  flash.now[:notice] = "<strong>#{@entry.name}<strong> has saved!".html_safe
+  # Tu use turbo stream we use a respond block
+  respond_to do |format|
+    format.html { redirect_to root_path }
+    format.turbo_stream { }
+  end
+else
+  render :new, status: :unprocessable_entity
+end
+```
+
+Then create the file with the action name and ending with turbo_stream, because this is a turbo stream response
+
+```erb
+app/views/entries/create.turbo_stream.erb
 ```

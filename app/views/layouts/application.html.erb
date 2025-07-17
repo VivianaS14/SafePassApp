@@ -23,8 +23,12 @@
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>">
-    <%= render(partial: 'shared/flash') %>
+    <%# For devise %>
     <%= render(partial: 'shared/navbar') %>
+    <%# For Turbo stream %>
+    <div id="flash">
+      <%= render(partial: 'shared/flash') %>
+    </div>
     <div class="container">
       <%= yield %>
     </div>
